@@ -1,0 +1,49 @@
+<h1> Main works!</h1>
+
+
+<ng-container *ngIf="loading">
+  Loading...
+</ng-container>
+
+<br/>
+<ng-container *ngIf="!loading">
+
+  CREATE CATEGORY:
+  <div>
+    <input type="text" [(ngModel)]="name"/>
+    <button (click)="createTasklist()">Create</button>
+  </div>
+
+  <br/>
+  <br/>
+  <h2>Task lists:</h2>
+  <div>
+    <div *ngFor="let t of tasklists">
+      <button type="button" class="btn btn-info mr-1" (click)="getTasks(t)">{{t.id}}
+        -{{t.name}}</button>
+      <button type="button" class="btn btn-danger mr-1" (click)="deleteTasklist(t)"> Удалить </button>
+      <button type="button" class="btn btn-secondary mr-1" (click)="updateTasklist(t)"> Изменить </button>
+      <input type="text" [(ngModel)]="t.name" />
+    </div>
+  </div>
+
+  <br/>
+  <h2>Tasks:</h2>
+  <div>
+    <button type="button" class="btn btn-info mr-1" *ngFor="let ta of tasks" (click)="getTask(ta.id)">
+      {{ta.id}}-{{ta.name}}-{{ta.status}}
+    </button>
+  </div>
+
+  <br/>
+  <h2>Task details:</h2>
+  <div>
+    <div *ngIf="taskloaded">
+      <h6>ID:</h6>{{dispTask.id}}
+      <h6>Name:</h6>{{dispTask.name}}
+      <h6>Date created:</h6>{{dispTask.created}}
+      <h6>Due date:</h6>{{dispTask.due}}
+      <h6>Status:</h6>{{dispTask.status}}
+    </div>
+  </div>
+</ng-container>
