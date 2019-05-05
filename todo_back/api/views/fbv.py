@@ -8,17 +8,17 @@ from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET', 'POST'])
 def Tasklists(request):
-    if request.method == 'GET':
-        if IsAuthenticated:
-            tasklists = TaskList.objects.filter(created_by=)
-        serializer = TaskListSerializer(tasklists, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    elif request.method == 'POST':
-        serializer = TaskListSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    if IsAuthenticated:
+        if request.method == 'GET':
+            tasklists = TaskList.objects.all()
+            serializer = TaskListSerializer(tasklists, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        elif request.method == 'POST':
+            serializer = TaskListSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])

@@ -11,7 +11,7 @@ export class MainComponent implements OnInit {
 
   constructor(private provider: ProviderService) {
   }
-
+  public isLogged = false;
   public tasklists: Tasklist[] = [];
   public tasks: Task[] = [];
   public dispTask: Task;
