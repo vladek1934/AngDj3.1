@@ -16,7 +16,9 @@
 </ng-container>
 <br/>
 <ng-container *ngIf="isLogged">
-
+  <div>
+    <button type="button" class="btn btn-danger" (click)="logout()">Log out</button>
+  </div>
   CREATE CATEGORY:
   <div>
     <input type="text" [(ngModel)]="name"/>

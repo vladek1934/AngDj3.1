@@ -11,22 +11,54 @@ export class MainComponent implements OnInit {
 
   constructor(private provider: ProviderService) {
   }
+
   public isLogged = false;
   public tasklists: Tasklist[] = [];
   public tasks: Task[] = [];
   public dispTask: Task;
   public loading = true;
   public taskloaded = false;
+  public login = '';
+  public password = '';
+  public isEditable = false;
   public name: any = '';
 
 
   ngOnInit() {
-    this.provider.getTasklists().then(
-      res => {
-        this.tasklists = res;
-        this.loading = false;
-      }
-    );
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.isLogged = true;
+    }
+
+    if (this.isLogged) {
+      this.getTaskLists();
+    }
+  }
+
+  getTaskLists() {
+    this.provider.getTasklists().then(res => {
+      this.tasklists = res;
+      this.loading = false;
+    });
+  }
+
+  auth() {
+    if (this.login !== '' && this.password !== '') {
+      this.provider.auth(this.login, this.password).then(res => {
+        localStorage.setItem('token', res.token);
+        this.isLogged = true;
+        this.getTaskLists();
+      });
+    }
+    this.isEditable = false;
+  }
+
+  logout() {
+    this.provider.logout().then(res => {
+      this.isLogged = false;
+      localStorage.clear();
+    });
+    this.isEditable = false;
   }
 
   getTasks(tasklist: Tasklist) {

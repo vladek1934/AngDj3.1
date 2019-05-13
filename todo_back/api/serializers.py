@@ -29,3 +29,12 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'
+
+class TaskListSerializer2(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(required=True)
+    created_by = UserSerializer(read_only=True)
+
+    class Meta:
+        model = TaskList
+        fields = '__all__'

@@ -10,3 +10,6 @@ export interface Task {
   created: string;
   status: string;
 }
+export interface IAuthResponse {
+  token: string;
+}
